@@ -1,4 +1,3 @@
-import React from 'react'
 import useProjectsStore from '../store/useProjectsStore'
 import ProjectFilter from '../components/project/ProjectFilter'
 import ProjectCard from '../components/project/ProjectCard'
