@@ -1,14 +1,20 @@
-const App = () => {
-	return (
-		<div className="min-h-screen flex flex-col bg-black text-white/95 items-center justify-center text-2xl font-bold text-center">
-			<img
-				className="size-40"
-				src="https://res.cloudinary.com/dltj8bim0/image/upload/v1761060580/logo_kukwt0.png"
-				alt=""
-			/>
-			<p>Hello Vite + React + TailwindCSS!</p>
-		</div>
-	);
-};
+import React from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import Projects from './pages/Projects'
+import Notifications from './pages/Notifications'
+import ProjectDetailPage from './pages/ProjectDetailPage'
 
-export default App;
+const App = () => {
+  return (
+	<Routes>
+		<Route>
+			<Route path="/" element={<Navigate to="/projects" />}/>
+			<Route path="/projects" element={<Projects/>}/>
+			<Route path="/projects/:projectId" element={<ProjectDetailPage/>}/>
+			<Route path="/notifications" element={<Notifications/>}/>
+		</Route>
+	</Routes>
+  )
+}
+
+export default App
