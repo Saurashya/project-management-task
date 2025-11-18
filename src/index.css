@@ -1,9 +1,20 @@
 @import "tailwindcss";
 
 :root{
-    --bg-primary:#e5e5e5;
+    --bg-primary:#020408;
+    --bg-secondary:#0c1117;
+    --btn-success:#238636;
 }
 
 .bg-primary{
-    background-color: var(--bg-primary);
+    background: var(--bg-primary);
+}
+
+.bg-secondary{
+    background: var(--bg-secondary)
+}
+
+.btn-success{
+    background: var(--btn-success);
+    color: white;
 }

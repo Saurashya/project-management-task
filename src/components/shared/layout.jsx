@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const Layout = ({ children }) => (
-  <div className="min-h-screen flex flex-col">
+  <div className="min-h-screen flex flex-col bg-primary">
     <header className="border-b border-slate-800 bg-slate-900/80 backdrop-blur">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link
@@ -11,7 +11,7 @@ const Layout = ({ children }) => (
         >
           <span className="text-white text-xl">MyProject Management Tool</span>
         </Link>
-        <nav className="flex gap-4 text-sm">
+        <nav className="flex gap-4 text-sm shadow">
           <NavLink
             to="/projects"
             className={({ isActive }) =>
