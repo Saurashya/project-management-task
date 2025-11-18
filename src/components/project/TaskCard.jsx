@@ -2,7 +2,7 @@ import React from "react";
 
 const TaskCard = ({ task }) => {
   return (
-    <div className="rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20">
+    <article className="rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-sm text-white/50">Task</p>
@@ -13,7 +13,7 @@ const TaskCard = ({ task }) => {
         </span>
       </div>
       <div className="mt-3 flex flex-wrap gap-2 text-xs text-white/70">
-        {task.tags.map((tag,index) => (
+        {task.tags.map((tag, index) => (
           <span
             key={index}
             className="rounded-full border border-white/10 px-3 py-1"
@@ -28,8 +28,10 @@ const TaskCard = ({ task }) => {
           <ul className="mt-2 space-y-1 text-sm text-white/80">
             {task.assignedTo.map((member) => (
               <li key={member.id}>
-                <p><span className="font-semibold">{member.name}</span>— {member.role} (
-                {member.skills.join(", ")})</p> 
+                <p>
+                  <span className="font-semibold">{member.name}</span>—{" "}
+                  {member.role} ({member.skills.join(", ")})
+                </p>
               </li>
             ))}
           </ul>
@@ -58,19 +60,18 @@ const TaskCard = ({ task }) => {
       <div className="mt-4 flex justify-between text-sm text-white/70">
         <button
           type="button"
-        //   onClick={() => handleTaskComplete(task, milestone)}
-          className={
-            `rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wide",
-            ${task.status === "completed"
+          //   onClick={() => handleTaskComplete(task, milestone)}
+          className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wide" ${
+            task.status === "completed"
               ? "border border-emerald-400 text-emerald-300"
-              : "bg-emerald-400 text-slate-900 hover:bg-emerald-300"}`
-          }
+              : "bg-emerald-400 text-slate-900 hover:bg-emerald-300"
+          }`}
           disabled={task.status === "completed"}
         >
           {task.status === "completed" ? "Completed" : "Mark Complete"}
         </button>
       </div>
-    </div>
+    </article>
   );
 };
 

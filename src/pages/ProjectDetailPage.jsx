@@ -18,15 +18,15 @@ const ProjectDetailPage = () => {
   }
 
   return (
-    <div>
+    <main>
       <NavLink
         to="/projects"
-        className="text-xs text-cyan-300 py-4 flex items-center gap-2 hover:text-white"
+        className="text-xs text-cyan-300 py-4 flex items-center gap-2 hover:text-white w-fit"
       >
         <FaArrowLeft />
         <span>Back to Projects</span>
       </NavLink>
-      <div className="text-white project-details-container shadow">
+      <article className="text-white project-details-container shadow">
         <div className="h-fit bg-white/5 text-white p-6 rounded-2xl min-h-fit">
           <div className="title-container flex items-center justify-between">
             <div className="py-2">
@@ -39,14 +39,14 @@ const ProjectDetailPage = () => {
               {Project.status}
             </button>
           </div>
-          <div className="details-container text-slate-300 text-sm ">
+          <section className="details-container text-slate-300 text-sm ">
             <p>Owner: {`${Project.owner.name} (${Project.owner.email})`}</p>
             <p>
               Contact: {`${Project.owner.contact?.phone ?? "N/A"} (${Project.owner.contact?.office ?? "N/A"})`}
             </p>
-          </div>
+          </section>
           {/* CARDS */}
-          <div className="cards flex gap-2 mt-4">
+          <section className="cards flex gap-2 mt-4">
             {/* Budget Card */}
             <div className="text-sm p-4 bg-white/5 my-2 rounded-xl flex-1">
               <h2 className="uppercase font-light tracking-wide text-slate-300">
@@ -70,19 +70,19 @@ const ProjectDetailPage = () => {
                 );
               })}
             </div>
-          </div>
+          </section>
           {/* TASK FILTER */}
           <TaskFilter />
           {/* MILESTONES */}
-          <div className="milestones">
+          <section className="milestones">
               {Project.milestones.length<1 && <h2 className="text-lg text-white p-4">No milestones yet</h2>}
               <div>
                 {Project.milestones.map((milestone) => <MilestoneCard milestone={milestone} key={milestone.id}/>)}
               </div> 
-          </div>
+          </section>
         </div>
-      </div>
-    </div>
+      </article>
+    </main>
   );
 };
 

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const ProjectCard = ({project}) => {
   return (
-    <div className='bg-white/5 text-white p-6 rounded-2xl min-h-fit'>
+    <article className='bg-white/5 text-white p-6 rounded-2xl min-h-fit'>
         <div className='title-container flex items-center justify-between'>
             <div className='py-2'>
                 <h3 className='uppercase text-sm tracking-wide'>{project.department}</h3>
@@ -20,8 +20,8 @@ const ProjectCard = ({project}) => {
         <div>
     {/* {project.milestones} */}
         </div>
-            <NavLink to={`/projects/${project.id}`} className='text-sm text-cyan-300 py-4 flex items-center gap-2 hover:text-white'><span>View Project</span><FaArrowRight/></NavLink>
-    </div>
+            <NavLink to={`/projects/${project.id}`} className='text-sm text-cyan-300 py-4 flex items-center gap-2 hover:text-white w-fit'><span>View Project</span><FaArrowRight/></NavLink>
+    </article>
   )
 }
 
