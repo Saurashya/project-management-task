@@ -1,8 +1,15 @@
 import useProjectsStore from '../store/useProjectsStore'
 import ProjectFilter from '../components/project/ProjectFilter'
 import ProjectCard from '../components/project/ProjectCard'
+import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 const Projects = () => {
   const projects = useProjectsStore((state) => state.projects)
+  const [filteredProjects,setFilteredProjects] = useState(projects)
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <main>
       <header className='flex items-center w-full justify-between'>
@@ -14,10 +21,10 @@ const Projects = () => {
       </header>
         <hr className='my-2 text-slate-400/40'/>
       <section>
-        <ProjectFilter/>
+        <ProjectFilter projects= {projects} setFilteredProjects={setFilteredProjects} location={location} navigate={navigate}/>
         <div className='grid grid-cols-2 m-auto gap-8 my-4 h-fit'>
           {
-          projects.map((project)=>{
+          filteredProjects.map((project)=>{
             return <ProjectCard key={project.id} project={project}/>
           })
         }
