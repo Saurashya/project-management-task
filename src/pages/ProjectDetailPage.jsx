@@ -3,8 +3,9 @@ import useProjectsStore from "../store/useProjectsStore";
 import { FaArrowLeft } from "react-icons/fa";
 import TaskFilter from "../components/project/TaskFilter";
 import MilestoneCard from "../components/project/MilestoneCard";
-import { useState, useEffect } from "react";
-import BudgetPieChart from "../components/ui/modals/BudgetPieChart";
+import { useState, useEffect, lazy, Suspense } from "react";
+
+const BudgetPieChart = lazy(() => import("../components/ui/modals/BudgetPieChart"));
 
 const ProjectDetailPage = () => {
   const projects = useProjectsStore((state) => state.projects);
@@ -99,7 +100,9 @@ const ProjectDetailPage = () => {
             </div>
           </section>
           <figure className="flex justify-center items-center">
-            <BudgetPieChart project={Project} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <BudgetPieChart project={Project} />
+            </Suspense>
           </figure>
           {/* TASK FILTER */}
           <TaskFilter
