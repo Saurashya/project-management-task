@@ -30,6 +30,7 @@ const BudgetPieChart = ({ project }) => {
                 onMouseEnter={onPieEnter}
                 style={{ cursor: 'pointer', outline: 'none' }}
                 label={({ name, value }) => `${name}: Rs. ${value}`}
+                labelStyle={{ fontSize:'12px' }}
             >
                 {data.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

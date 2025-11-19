@@ -3,7 +3,7 @@ import ProjectFilter from "../components/project/ProjectFilter";
 import ProjectCard from "../components/project/ProjectCard";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AddProjectModal } from "../components/ui/charts/AddProjectModal";
+import { AddProjectModal } from "../components/ui/modals/AddProjectModal";
 import useNotificationStore from "../store/useNotificationStore";
 
 const Projects = () => {
@@ -40,7 +40,7 @@ const Projects = () => {
           location={location}
           navigate={navigate}
         />
-        <div className="grid grid-cols-2 m-auto gap-8 my-4 h-fit">
+        <div className="grid grid-cols-1 md:grid-cols-2 m-auto gap-8 my-4 h-fit">
           {filteredProjects.map((project) => {
             return <ProjectCard key={project.id} project={project} />;
           })}

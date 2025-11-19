@@ -5,7 +5,7 @@ import TaskFilter from "../components/project/TaskFilter";
 import MilestoneCard from "../components/project/MilestoneCard";
 import { useState, useEffect, lazy, Suspense } from "react";
 
-const BudgetPieChart = lazy(() => import("../components/ui/modals/BudgetPieChart"));
+const BudgetPieChart = lazy(() => import("../components/ui/charts/BudgetPieChart"));
 
 const ProjectDetailPage = () => {
   const projects = useProjectsStore((state) => state.projects);

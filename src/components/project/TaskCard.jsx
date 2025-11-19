@@ -34,7 +34,7 @@ const TaskCard = ({ task, highlight = false, projectId, milestoneId }) => {
   return (
     <article
       id={`task-${task.id}`}
-      className={`rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20 ${highlight ? 'ring-2 ring-cyan-400' : ''}`}
+      className={`rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20 ${highlight ? 'shadow-md shadow-blue-400' : ''}`}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
