@@ -15,6 +15,7 @@ const ProjectDetailPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+
   const [filteredTasks, setFilteredTasks] = useState(null);
 
   if (!Project) {
@@ -129,7 +130,11 @@ const ProjectDetailPage = () => {
             ) : (
               <div>
                 {Project.milestones.map((milestone) => (
-                  <MilestoneCard key={milestone.id} milestone={milestone} isOpen={false}/>
+                  <MilestoneCard
+                    key={milestone.id}
+                    milestone={milestone}
+                    isOpen={false}
+                  />
                 ))}
               </div>
             )}

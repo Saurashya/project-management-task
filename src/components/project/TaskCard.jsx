@@ -1,6 +1,28 @@
 import React from "react";
+import useProjectsStore from "../../store/useProjectsStore";
+import useNotificationStore from "../../store/useNotificationStore";
 
 const TaskCard = ({ task }) => {
+  const completeTask = useProjectsStore((state) => state.completeTask);
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
+
+  const handleTaskComplete = () => {
+    addNotification({
+      id: Date.now(),
+      message: "Task marked completed.",
+      type: "Task completion",
+      ref: {
+        projectId: task.projectId,
+        milestoneId: task.milestoneId,
+        taskId: task.id,
+      },
+      seen: false,
+      createdAt: Date.now(),
+    });
+    completeTask(task.id);
+  };
   return (
     <article className="rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -60,7 +82,7 @@ const TaskCard = ({ task }) => {
       <div className="mt-4 flex justify-between text-sm text-white/70">
         <button
           type="button"
-          //   onClick={() => handleTaskComplete(task, milestone)}
+          onClick={() => handleTaskComplete()}
           className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wide" ${
             task.status === "completed"
               ? "border border-emerald-400 text-emerald-300"
