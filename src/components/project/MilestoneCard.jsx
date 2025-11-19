@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TaskCard from "./TaskCard";
 
-const MilestoneCard = ({ milestone }) => {
-  const [isMilestoneOpen, setIsMilestoneOpen] = useState(false);
+const MilestoneCard = ({ milestone,isOpen=false}) => {
+  const [isMilestoneOpen, setIsMilestoneOpen] = useState(isOpen);
   return (
     <article className="transition-all duration-500">
       {!isMilestoneOpen ? (

@@ -1,22 +1,32 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import useProjectsStore from "../store/useProjectsStore";
 import { FaArrowLeft } from "react-icons/fa";
 import TaskFilter from "../components/project/TaskFilter";
 import MilestoneCard from "../components/project/MilestoneCard";
+import { useState } from "react";
 
 const ProjectDetailPage = () => {
   const projects = useProjectsStore((state) => state.projects);
   const params = useParams();
-  const Project = projects.find((project) => project.id == params.projectId);
+  const Project = projects.find(
+    (project) => project.id === parseInt(params.projectId)
+  );
 
-  if(!Project){
-    return(
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [filteredTasks, setFilteredTasks] = useState(null);
+
+  if (!Project) {
+    return (
       <div>
         <h1 className="text-white text-2xl">Project not found !</h1>
-       </div> 
-        )
+      </div>
+    );
   }
 
+  const allTasks = Project.milestones.flatMap((milestone) => milestone.tasks);
+  const isFiltered = filteredTasks && filteredTasks.length < allTasks.length;
   return (
     <main>
       <NavLink
@@ -42,7 +52,10 @@ const ProjectDetailPage = () => {
           <section className="details-container text-slate-300 text-sm ">
             <p>Owner: {`${Project.owner.name} (${Project.owner.email})`}</p>
             <p>
-              Contact: {`${Project.owner.contact?.phone ?? "N/A"} (${Project.owner.contact?.office ?? "N/A"})`}
+              Contact:{" "}
+              {`${Project.owner.contact?.phone ?? "N/A"} (${
+                Project.owner.contact?.office ?? "N/A"
+              })`}
             </p>
           </section>
           {/* CARDS */}
@@ -72,13 +85,54 @@ const ProjectDetailPage = () => {
             </div>
           </section>
           {/* TASK FILTER */}
-          <TaskFilter />
+          <TaskFilter
+            location={location}
+            navigate={navigate}
+            tasks={allTasks}
+            setFilteredTasks={setFilteredTasks}
+            projectId={Project.id}
+          />
+          {/* MILESTONES */}
+          {Project.milestones.length < 1 && (
+            <h2 className="text-lg text-white p-4">No milestones yet</h2>
+          )}
           {/* MILESTONES */}
           <section className="milestones">
-              {Project.milestones.length<1 && <h2 className="text-lg text-white p-4">No milestones yet</h2>}
+            {isFiltered ? (
+              Project.milestones.some((milestone) =>
+                milestone.tasks.some((task) =>
+                  filteredTasks.some((item) => item.id === task.id)
+                )
+              ) ? (
+                Project.milestones.map((milestone) => {
+                  const filteredMilestoneTasks = milestone.tasks.filter(
+                    (task) => filteredTasks.some((item) => item.id === task.id)
+                  );
+                  return filteredMilestoneTasks.length > 0 ? (
+                    <MilestoneCard
+                      key={milestone.id}
+                      milestone={{
+                        ...milestone,
+                        tasks: filteredMilestoneTasks,
+                      }}
+                      isOpen
+                    />
+                  ) : null;
+                })
+              ) : (
+                <h2 className="text-lg text-white p-4">
+                  No tasks match the filters
+                </h2>
+              )
+            ) : Project.milestones.length < 1 ? (
+              <h2 className="text-lg text-white p-4">No milestones yet</h2>
+            ) : (
               <div>
-                {Project.milestones.map((milestone) => <MilestoneCard milestone={milestone} key={milestone.id}/>)}
-              </div> 
+                {Project.milestones.map((milestone) => (
+                  <MilestoneCard key={milestone.id} milestone={milestone} isOpen={false}/>
+                ))}
+              </div>
+            )}
           </section>
         </div>
       </article>
