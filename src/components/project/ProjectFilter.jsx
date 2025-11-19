@@ -28,13 +28,7 @@ class ProjectFilter extends Component {
         status: params.get("status") || "",
         department: params.get("department") || "",
       });
-      this.updatingFromUrl = true;
       return;
-    }
-
-    if(this.updatingFromUrl){
-        this.updatingFromUrl = false;
-        return;
     }
 
     if (
@@ -65,7 +59,7 @@ class ProjectFilter extends Component {
     const {search,status,department} = this.state;
     const {projects,setFilteredProjects} = this.props;
 
-    if(!projects || typeof setFilteredProjects !== "function" || !setFilteredProjects){
+    if(!projects || typeof setFilteredProjects !== "function"){
         return;
     }
     
@@ -73,18 +67,18 @@ class ProjectFilter extends Component {
 
     if(search.trim()){
         filteredProjects= filteredProjects.filter((project)=>{
-            return project.title.toLowerCase().includes(search.toLowerCase())
+            return project?.name?.toLowerCase().includes(search.toLowerCase())
         })
     }
     if(status){
         filteredProjects = filteredProjects.filter((project)=>{
-            return project.status.toLowerCase() === status.toLowerCase()
+            return project?.status?.toLowerCase() === status.toLowerCase()
         })
     }
 
     if(department){
         filteredProjects = filteredProjects.filter((project)=>{
-            return project.department.toLowerCase() === department.toLowerCase()
+            return project?.department?.toLowerCase() === department.toLowerCase()
         })
     }
         setFilteredProjects(filteredProjects)
