@@ -3,7 +3,8 @@ import useProjectsStore from "../store/useProjectsStore";
 import { FaArrowLeft } from "react-icons/fa";
 import TaskFilter from "../components/project/TaskFilter";
 import MilestoneCard from "../components/project/MilestoneCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import BudgetPieChart from "../components/ui/modals/BudgetPieChart";
 
 const ProjectDetailPage = () => {
   const projects = useProjectsStore((state) => state.projects);
@@ -15,8 +16,20 @@ const ProjectDetailPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const searchParams = new URLSearchParams(location.search);
+  const milestoneParam = searchParams.get("milestone");
+  const taskParam = searchParams.get("task");
 
   const [filteredTasks, setFilteredTasks] = useState(null);
+
+  useEffect(() => {
+    if (taskParam) {
+      const taskElement = document.getElementById(`task-${taskParam}`);
+      if (taskElement) {
+        taskElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, [taskParam]);
 
   if (!Project) {
     return (
@@ -60,7 +73,7 @@ const ProjectDetailPage = () => {
             </p>
           </section>
           {/* CARDS */}
-          <section className="cards flex gap-2 mt-4">
+          <section className="cards flex gap-2 mt-4 flex-wrap">
             {/* Budget Card */}
             <div className="text-sm p-4 bg-white/5 my-2 rounded-xl flex-1">
               <h2 className="uppercase font-light tracking-wide text-slate-300">
@@ -85,6 +98,9 @@ const ProjectDetailPage = () => {
               })}
             </div>
           </section>
+          <figure className="flex justify-center items-center">
+            <BudgetPieChart project={Project} />
+          </figure>
           {/* TASK FILTER */}
           <TaskFilter
             location={location}
@@ -93,10 +109,6 @@ const ProjectDetailPage = () => {
             setFilteredTasks={setFilteredTasks}
             projectId={Project.id}
           />
-          {/* MILESTONES */}
-          {Project.milestones.length < 1 && (
-            <h2 className="text-lg text-white p-4">No milestones yet</h2>
-          )}
           {/* MILESTONES */}
           <section className="milestones">
             {isFiltered ? (
@@ -109,6 +121,10 @@ const ProjectDetailPage = () => {
                   const filteredMilestoneTasks = milestone.tasks.filter(
                     (task) => filteredTasks.some((item) => item.id === task.id)
                   );
+                  const shouldOpen =
+                    filteredMilestoneTasks.length > 0 &&
+                    (milestone.id === milestoneParam ||
+                      milestoneParam === null);
                   return filteredMilestoneTasks.length > 0 ? (
                     <MilestoneCard
                       key={milestone.id}
@@ -116,7 +132,10 @@ const ProjectDetailPage = () => {
                         ...milestone,
                         tasks: filteredMilestoneTasks,
                       }}
-                      isOpen
+                      isOpen={shouldOpen}
+                      highlightTaskId={taskParam}
+                      projectId={Project.id}
+                      milestoneId={milestone.id}
                     />
                   ) : null;
                 })
@@ -133,7 +152,10 @@ const ProjectDetailPage = () => {
                   <MilestoneCard
                     key={milestone.id}
                     milestone={milestone}
-                    isOpen={false}
+                    isOpen={milestone.id === milestoneParam}
+                    highlightTaskId={taskParam}
+                    projectId={Project.id}
+                    milestoneId={milestone.id}
                   />
                 ))}
               </div>

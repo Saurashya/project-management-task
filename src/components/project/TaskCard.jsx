@@ -1,30 +1,41 @@
-import React from "react";
 import useProjectsStore from "../../store/useProjectsStore";
 import useNotificationStore from "../../store/useNotificationStore";
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, highlight = false, projectId, milestoneId }) => {
   const completeTask = useProjectsStore((state) => state.completeTask);
   const addNotification = useNotificationStore(
     (state) => state.addNotification
   );
 
-  const handleTaskComplete = () => {
+  const handleTaskComplete = async () => {
     addNotification({
       id: Date.now(),
-      message: "Task marked completed.",
-      type: "Task completion",
+      message: `Task "${task.title}" marked completed.`,
+      type: "task",
       ref: {
-        projectId: task.projectId,
-        milestoneId: task.milestoneId,
+        projectId: projectId,
+        milestoneId: milestoneId,
         taskId: task.id,
       },
       seen: false,
-      createdAt: Date.now(),
+      createdAt: new Date().toISOString(),
     });
+
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        new Notification('Task Completed', {
+          body: `Task "${task.title}" has been marked as completed.`,
+        });
+      }
+    }
     completeTask(task.id);
   };
   return (
-    <article className="rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20">
+    <article
+      id={`task-${task.id}`}
+      className={`rounded-xl border border-white/5 bg-white/5 p-4 transition hover:border-white/20 ${highlight ? 'ring-2 ring-cyan-400' : ''}`}
+    >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-sm text-white/50">Task</p>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TaskCard from "./TaskCard";
-import DocumentViewerModal from "../ui/DocumentViewerModal";
+import DocumentViewerModal from "../ui/modals/DocumentViewerModal";
 
-const MilestoneCard = ({ milestone, isOpen = false }) => {
+const MilestoneCard = ({ milestone, isOpen = false, highlightTaskId, projectId, milestoneId }) => {
   const [isMilestoneOpen, setIsMilestoneOpen] = useState(isOpen);
   const [activeDocument, setActiveDocument] = useState(null);
 
@@ -53,7 +53,7 @@ const MilestoneCard = ({ milestone, isOpen = false }) => {
           </div>
           <div className="tasks grid grid-cols-1 gap-y-4 pt-4">
             {milestone.tasks.map((task) => (
-              <TaskCard key={task.id} task={task} />
+              <TaskCard key={task.id} task={task} highlight={task.id === highlightTaskId} projectId={projectId} milestoneId={milestoneId} />
             ))}
           </div>
           <section>
