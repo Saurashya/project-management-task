@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TaskCard from "./TaskCard";
-import DocumentViewerModal from "../ui/modals/DocumentViewerModal";
+import DocumentViewerModal from "../../ui/modals/DocumentViewerModal";
 
 const MilestoneCard = ({
   milestone,
