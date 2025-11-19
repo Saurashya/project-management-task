@@ -1,7 +1,7 @@
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import useProjectsStore from "../store/useProjectsStore";
 import { FaArrowLeft } from "react-icons/fa";
-import TaskFilter from "../components/project/TaskFilter";
+import TaskFilter from "../components/project/filters/TaskFilter";
 import MilestoneCard from "../components/project/MilestoneCard";
 import { useState, useEffect, lazy, Suspense } from "react";
 

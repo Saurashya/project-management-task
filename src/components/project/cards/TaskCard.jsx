@@ -1,5 +1,5 @@
-import useProjectsStore from "../../store/useProjectsStore";
-import useNotificationStore from "../../store/useNotificationStore";
+import useProjectsStore from "../../../store/useProjectsStore";
+import useNotificationStore from "../../../store/useNotificationStore";
 
 const TaskCard = ({ task, highlight = false, projectId, milestoneId }) => {
   const completeTask = useProjectsStore((state) => state.completeTask);

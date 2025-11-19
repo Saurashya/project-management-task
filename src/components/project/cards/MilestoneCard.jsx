@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import TaskCard from "./TaskCard";
 import DocumentViewerModal from "../ui/modals/DocumentViewerModal";
 
-const MilestoneCard = ({ milestone, isOpen = false, highlightTaskId, projectId, milestoneId }) => {
+const MilestoneCard = ({
+  milestone,
+  isOpen = false,
+  highlightTaskId,
+  projectId,
+  milestoneId,
+}) => {
   const [isMilestoneOpen, setIsMilestoneOpen] = useState(isOpen);
   const [activeDocument, setActiveDocument] = useState(null);
 
@@ -17,7 +23,10 @@ const MilestoneCard = ({ milestone, isOpen = false, highlightTaskId, projectId, 
       {!isMilestoneOpen ? (
         <div
           className="bg-white/10 p-4 rounded-2xl my-2 flex items-center justify-between"
-          onClick={() => setIsMilestoneOpen((prev) => !prev)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsMilestoneOpen((prev) => !prev);
+          }}
         >
           <div>
             <div>
@@ -53,7 +62,13 @@ const MilestoneCard = ({ milestone, isOpen = false, highlightTaskId, projectId, 
           </div>
           <div className="tasks grid grid-cols-1 gap-y-4 pt-4">
             {milestone.tasks.map((task) => (
-              <TaskCard key={task.id} task={task} highlight={task.id === highlightTaskId} projectId={projectId} milestoneId={milestoneId} />
+              <TaskCard
+                key={task.id}
+                task={task}
+                highlight={task.id === highlightTaskId}
+                projectId={projectId}
+                milestoneId={milestoneId}
+              />
             ))}
           </div>
           <section>

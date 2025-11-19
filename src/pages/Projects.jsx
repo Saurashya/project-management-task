@@ -1,6 +1,6 @@
 import useProjectsStore from "../store/useProjectsStore";
-import ProjectFilter from "../components/project/ProjectFilter";
-import ProjectCard from "../components/project/ProjectCard";
+import ProjectFilter from "../components/project/filters/ProjectFilter";
+import ProjectCard from "../components/project/cards/ProjectCard";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AddProjectModal } from "../components/ui/modals/AddProjectModal";
